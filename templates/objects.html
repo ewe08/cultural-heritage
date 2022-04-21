@@ -23,19 +23,15 @@
           <div>
          {% if current_user.is_authenticated and (current_user.admin_status == 1)%}
             <div>
-                <a href="/prod/{{ item.id }}" class="btn btn-warning">
+                <a href="/prod_sell/{{ item.id }}" class="btn btn-success">
+                        Посмотреть
+                    </a>
+                <a href="/object/{{ item.id }}" class="btn btn-warning">
                     Исправить
-                </a>
-                <a href="/prod_delete/{{ item.id }}" class="btn btn-danger">
-                    Удалить
                 </a>
             </div>
             {% endif %}
-                <div>
-                    <a href="/prod_sell/{{ item.id }}" class="btn btn-success">
-                        Посмотреть
-                    </a>
-                </div>
+
             </div>
         </div>
     </div>

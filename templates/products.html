@@ -50,6 +50,15 @@
             </p>
         {% endfor %}
     </p>
+     <p>
+        {{ form.info.label }}<br>
+        {{ form.info(class="form-control", rows="10") }}<br>
+        {% for error in form.category.errors %}
+            <p content="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
     <p>{{ form.in_UNESCO() }} {{ form.in_UNESCO.label }}</p>
 
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>

@@ -125,24 +125,36 @@ def edit_prod(id):
     form = ObjectForm()
     if request.method == "GET":
         db_sess = db_session.create_session()
-        prod = db_sess.query(Object).filter(Object.id == id,
-                                            Object.leader == current_user
-                                            ).first()
+        prod = db_sess.query(Object).filter(Object.id == id).first()
+
         if prod:
-            form.product.data = prod.product
-            form.price.data = prod.price
-            form.weight.data = prod.weight
+            form.name.data = prod.name
+            form.place.data = prod.address_text
+            form.category.data = prod.category
+            form.type.data = prod.object_type
+            form.info.data = prod.info
+            form.in_UNESCO.data = prod.unesco_status
+            form.picture.data = ''
+
         else:
             abort(404)
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        prod = db_sess.query(Object).filter(Object.id == id,
-                                            (Object.leader == current_user)
-                                            ).first()
+        prod = db_sess.query(Object).filter(Object.id == id).first()
+
         if prod:
-            prod.product = form.product.data
-            prod.price = form.price.data
-            prod.weight = form.weight.data
+            prod.name = form.name.data
+            prod.address_text = form.place.data
+            prod.category = form.category.data
+            prod.object_type = form.type.data
+            prod.info = form.info.data
+
+            if form.in_UNESCO.data:
+                prod.unesco_status = 1
+            else:
+                prod.unesco_status = 0
+
+            prod.photo = ''
             db_sess.commit()
             return redirect('/objects')
         else:
