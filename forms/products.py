@@ -11,7 +11,6 @@ class ObjectForm(FlaskForm):
     info = TextAreaField("Информация об объекте")
     in_UNESCO = BooleanField('Состоит в Юнеско?')
 
-    picture = FileField('Фото', validators=[FileAllowed([
-        'jpg', 'png'])])
+    picture = StringField("Ссылка фото на объект")
 
     submit = SubmitField("Подтвердить")
