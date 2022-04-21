@@ -51,7 +51,18 @@ h4 {
 
 .cells {
     display:table-cell;
-    float: left
+    float: left;
+    margin: 10px;
+}
+
+.name_cells {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    max-width: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height:120px /* fallback */
 }
 
 .table {

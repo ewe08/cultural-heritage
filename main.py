@@ -5,7 +5,6 @@ from werkzeug.exceptions import abort
 from werkzeug.utils import secure_filename
 import os
 
-
 from data import db_session
 from data.products import Object
 from data.users import User
@@ -18,6 +17,8 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 app.config['UPLOAD_FOLDER'] = r'static\img'
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+
 # 772c6ef89b0ef87bededd6647107b4fd1b2586b157e0540405e917a789c5d581 - api_key
 
 
@@ -31,22 +32,6 @@ def load_user(user_id):
 def index():
     return render_template("index.html")
 
-
-@app.route('/money', methods=['GET', 'POST'])
-@login_required
-def money():
-    if request.method == 'GET':
-        return render_template('money.html')
-    elif request.method == 'POST':
-        db_sess = db_session.create_session()
-        try:
-            db_sess.query(User).filter(User.id == current_user.id).update(
-                {User.balance: User.balance + int(request.form['balance'])})
-            db_sess.commit()
-        except ValueError:
-            return render_template('money.html',
-                                   message="Я понимаю только цифры")
-        return render_template('objects.html')
 
 @app.route('/info')
 @login_required
@@ -134,15 +119,15 @@ def add_obj():
         return render_template('products.html', message="Данные введены неверно", form=form)
 
 
-@app.route('/prod/<int:id>', methods=['GET', 'POST'])
+@app.route('/object/<int:id>', methods=['GET', 'POST'])
 @login_required
 def edit_prod(id):
     form = ObjectForm()
     if request.method == "GET":
         db_sess = db_session.create_session()
         prod = db_sess.query(Object).filter(Object.id == id,
-                                              Object.leader == current_user
-                                              ).first()
+                                            Object.leader == current_user
+                                            ).first()
         if prod:
             form.product.data = prod.product
             form.price.data = prod.price
@@ -152,8 +137,8 @@ def edit_prod(id):
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         prod = db_sess.query(Object).filter(Object.id == id,
-                                              (Object.leader == current_user)
-                                              ).first()
+                                            (Object.leader == current_user)
+                                            ).first()
         if prod:
             prod.product = form.product.data
             prod.price = form.price.data
@@ -173,7 +158,7 @@ def edit_prod(id):
 def prod_delete(id):
     db_sess = db_session.create_session()
     prod = db_sess.query(Object).filter(Object.id == id,
-                                          Object.leader == current_user).first()
+                                        Object.leader == current_user).first()
     if prod:
         db_sess.delete(prod)
         db_sess.commit()
@@ -182,25 +167,7 @@ def prod_delete(id):
     return redirect('/objects')
 
 
-@app.route('/prod_sell/<int:id>', methods=['GET', 'POST'])
-@login_required
-def sell_prod(id):
-    db_sess = db_session.create_session()
-    prod = db_sess.query(Object).filter(Object.id == id).first()
-    if current_user.balance >= prod.price and prod:
-        prod.leader.already_sold += 1
-        user = db_sess.query(User).filter(User.id == current_user.id).first()
-        user.balance -= prod.price
-        os.remove(f'static/img/{prod.id}.png')
-        db_sess.delete(prod)
-        db_sess.commit()
-    else:
-        return render_template('objects.html',
-                               message="Недостаточно денег")
-    return redirect('/objects')
-
-
 if __name__ == '__main__':
     db_sess = db_session.global_init(f"db/Culture.db")
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='127.0.0.1', port=port, debug=1)
+    app.run(host='127.0.0.1', port=port, debug=True)

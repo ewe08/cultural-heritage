@@ -14,11 +14,11 @@
 <div class="table">
     {% for item in prods%}
     <div class="cells">
-        <div class="card" style="width: 18rem;">
-            <h2>{{item.name}}</h2>
+        <div class="card" style="width: 18rem; height: 350px;">
+            <h2 class="name_cells">{{ item.name }}</h2>
           <div class="card-body">
               <p class="car/d-text">Адрес: <b>{{item.address_text}}</b></p>
-              <p class="car/d-text">Тип объекта: <b>{{item.category}}</b></p>
+              <p class="car/d-text">Тип объекта: <b>{{item.object_type}}</b></p>
           </div>
           <div>
          {% if current_user.is_authenticated and (current_user.admin_status == 1)%}
