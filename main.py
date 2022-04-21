@@ -153,15 +153,12 @@ def edit_prod(id):
                            )
 
 
-@app.route('/prod_delete/<int:id>', methods=['GET', 'POST'])
-@login_required
-def prod_delete(id):
+@app.route('/object_info/<int:id>', methods=['GET', 'POST'])
+def object_info(id):
     db_sess = db_session.create_session()
-    prod = db_sess.query(Object).filter(Object.id == id,
-                                        Object.leader == current_user).first()
+    prod = db_sess.query(Object).filter(Object.id == id).first()
     if prod:
-        db_sess.delete(prod)
-        db_sess.commit()
+        return render_template("object_info.html", prods=prod)
     else:
         abort(404)
     return redirect('/objects')

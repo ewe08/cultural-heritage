@@ -3,7 +3,7 @@ import pprint
 import json
 import sqlite3
 
-conn = sqlite3.connect('Culture.db')
+conn = sqlite3.connect('db/Culture.db')
 cursor = conn.cursor()
 
 for i in range(1, 148):

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{{ message }}
+<div class="container">
+    <h1>{{ prods.name }}</h1><br>
+
+    <h3> Адрес: {{ prods.address_text}} </h3><br>
+
+    <h3> Вид: {{ prods.object_type}} </h3><br>
+    <h3> Категория значения: {{ prods.category}} </h3><br>
+    {% if prods.unesco_status == 1 %}
+        <h3> Является объектом ЮНЕСКО </h3><br>
+    {% else %}
+        <h3> Не является объектом ЮНЕСКО </h3><br>
+    {% endif %}
+
+    <h3>{{ prods.info }}</h3>
+</div>
+
+
+{% endblock %}
