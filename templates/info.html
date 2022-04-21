@@ -3,34 +3,33 @@
 {% block content %}
 <h3>{{user.name}} {{user.surname}}</h3>
 <h3>Все объекты:</h3>
+<a class="btn btn-success" href="/logout">Выйти</a>
 
 <div class="table">
     {% for item in prods%}
     <div class="cells">
-        <div class="card" style="width: 18rem;">
-            <h2>{{item.product}}</h2>
-          <img class="card-img-top" src="static/img/{{ item.id }}.png" alt="Card image cap">
+        <div class="card" style="width: 18rem; height: 350px;">
+            <h2 class="name_cells">{{ item.name }}</h2>
           <div class="card-body">
-              <p class="card-text">Цена: <b>{{item.price}}</b></p>
-              <p class="card-text">Вес: <b>{{item.weight}}</b></p>
-              <p class="card-text">Дата продажи: <b>{{item.date}}</b></p>
+              <p class="car/d-text">Адрес: <b>{{item.address_text}}</b></p>
+              <p class="car/d-text">Тип объекта: <b>{{item.object_type}}</b></p>
           </div>
           <div>
-         {% if current_user.is_authenticated and () %}
+         {% if current_user.is_authenticated and (current_user.admin_status == 1)%}
             <div>
-                <a href="/prod/{{ item.id }}" class="btn btn-warning">
-                    Изменить объект
-                </a>
-                <a href="/prod_delete/{{ item.id }}" class="btn btn-danger">
-                    Delete job
+                <a href="/prod_sell/{{ item.id }}" class="btn btn-success">
+                        Посмотреть
+                    </a>
+                <a href="/object/{{ item.id }}" class="btn btn-warning">
+                    Исправить
                 </a>
             </div>
             {% endif %}
-          </div>
+
+            </div>
         </div>
     </div>
 
     {% endfor %}
 </div>
-<a class="btn btn-success" href="/logout">Выйти</a>
 {% endblock %}

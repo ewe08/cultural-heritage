@@ -7,7 +7,9 @@ import os
 
 from data import db_session
 from data.products import Object
+from data.Comments import Comment
 from data.users import User
+from forms.comment import CommentForm
 from forms.user import RegisterForm
 from forms.login import LoginForm
 from forms.products import ObjectForm
@@ -169,11 +171,31 @@ def edit_prod(id):
 def object_info(id):
     db_sess = db_session.create_session()
     prod = db_sess.query(Object).filter(Object.id == id).first()
+    comms = db_sess.query(Comment).filter(Comment.post == id)
     if prod:
-        return render_template("object_info.html", prods=prod)
+        return render_template("object_info.html", prods=prod, comm=comms)
     else:
         abort(404)
     return redirect('/objects')
+
+
+@app.route('/object_comments/<int:id>', methods=['GET', 'POST'])
+def object_comments(id):
+    form = CommentForm()
+    try:
+        if form.validate_on_submit():
+            db_sess = db_session.create_session()
+            com = Comment(
+                user=current_user.id,
+                post=id,
+                text=form.comment.data
+            )
+            com = str(db_sess.query(com)[-1].id)
+            return redirect('/objects.html')
+        return render_template('object_comments.html', title='Добавить комментарий',
+                               form=form)
+    except Exception:
+        return render_template('object_comments.html', message="Данные введены неверно", form=form)
 
 
 if __name__ == '__main__':

@@ -16,8 +16,28 @@
         <h3> Не является объектом ЮНЕСКО </h3><br>
     {% endif %}
 
-    <h3>{{ prods.info }}</h3>
+    <h3>{{ prods.info }}</h3><br>
+
+    <div class="table">
+        {% for item in comm %}
+        <div class="cells">
+            <div class="card">
+                <h2 class="name_cells">{{ item.leader.user }}</h2>
+              <div class="card-body">
+                  <p class="car/d-text">{{item.text}}</p>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div>
+            <a href="/object_comments/{{ prods.id }}" class="btn btn-secondary">
+                Оставить комментарий
+            </a>
+        </div>
+    </div>
 </div>
+
 
 
 {% endblock %}
