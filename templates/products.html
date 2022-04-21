@@ -60,7 +60,9 @@
         {% endfor %}
     </p>
     <p>{{ form.in_UNESCO() }} {{ form.in_UNESCO.label }}</p>
-
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    <div class="div">
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        <a href="/obj_delete/{{ prod.id }}" class="btn btn-danger">Удалить информацию об объекте</a>
+    </div>
 </form>
 {% endblock %}

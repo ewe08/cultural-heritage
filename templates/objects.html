@@ -21,12 +21,11 @@
               <p class="car/d-text">Тип объекта: <b>{{item.object_type}}</b></p>
           </div>
           <div>
-              <a href="/object_info/{{ item.id }}" class="btn btn-success">
+         {% if current_user.is_authenticated and (current_user.admin_status == 1)%}
+            <div>
+                <a href="/prod_sell/{{ item.id }}" class="btn btn-success">
                         Посмотреть
                     </a>
-         {% if current_user.is_authenticated and (current_user.admin_status == 1)%}
-
-
                 <a href="/object/{{ item.id }}" class="btn btn-warning">
                     Исправить
                 </a>

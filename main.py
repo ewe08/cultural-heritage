@@ -162,10 +162,10 @@ def edit_prod(id):
                 abort(404)
         return render_template('products.html',
                                title='Редактирование задания',
-                               form=form
+                               form=form, prod=prod
                                )
     else:
-        return "<h5>Отказано в доступе</h5>"
+        return "<h1>Отказано в доступе</h1>"
 
 
 @app.route('/object_info/<int:id>', methods=['GET', 'POST'])
@@ -178,6 +178,20 @@ def object_info(id):
         abort(404)
     return redirect('/objects')
 
+@app.route('/obj_delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def prod_delete(id):
+    if current_user.admin_status == 1:
+        db_sess = db_session.create_session()
+        prod = db_sess.query(Object).filter(Object.id == id).first()
+        if prod:
+            db_sess.delete(prod)
+            db_sess.commit()
+        else:
+            abort(404)
+        return redirect('/shop')
+    else:
+        return "<h1>Отказано в доступе</h1>"
 
 if __name__ == '__main__':
     db_sess = db_session.global_init(f"db/Culture.db")
