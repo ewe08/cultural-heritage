@@ -16,7 +16,7 @@ class Comment(SqlAlchemyBase):
                                sqlalchemy.ForeignKey("Products.id"))
     text = sqlalchemy.Column(sqlalchemy.String)
     leader = orm.relation('User')
-    leader1 = orm.relation('Product')
+    leader1 = orm.relation('Object')
 
 
 

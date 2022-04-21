@@ -7,7 +7,7 @@ import os
 
 from data import db_session
 from data.products import Object
-from data.Comments import Comment
+from data.comments import Comment
 from data.users import User
 from forms.comment import CommentForm
 from forms.user import RegisterForm
