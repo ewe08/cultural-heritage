@@ -23,7 +23,7 @@
           <div>
          {% if current_user.is_authenticated and (current_user.admin_status == 1)%}
             <div>
-                <a href="/prod_sell/{{ item.id }}" class="btn btn-success">
+                <a href="/object_info/{{ item.id }}" class="btn btn-success">
                         Посмотреть
                     </a>
                 <a href="/object/{{ item.id }}" class="btn btn-warning">
