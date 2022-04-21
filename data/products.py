@@ -11,10 +11,13 @@ class Object(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     name = sqlalchemy.Column(sqlalchemy.String)
-    place = sqlalchemy.Column(sqlalchemy.String)
+    address_text = sqlalchemy.Column(sqlalchemy.String)
     category = sqlalchemy.Column(sqlalchemy.String)
-    type = sqlalchemy.Column(sqlalchemy.String)
-    in_UNESCO = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
+    map_pos = sqlalchemy.Column(sqlalchemy.String)
+    object_type = sqlalchemy.Column(sqlalchemy.String)
+    info = sqlalchemy.Column(sqlalchemy.String)
+    photo = sqlalchemy.Column(sqlalchemy.String)
+    unesco_status = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
     # leader = orm.relation('User')
     """categories = orm.relation("Category",
                               secondary="association",
